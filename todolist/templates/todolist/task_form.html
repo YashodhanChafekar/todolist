@@ -1,0 +1,50 @@
+
+
+
+
+
+{% extends 'todolist/main.html' %}
+
+<!-- This is Edit form -->
+
+{% block content%}
+<div class="shadow p-3 mb-5 bg-body rounded" style=" margin: 20px;">
+    <h1>Task Edit</h1>
+<a class="text-decoration-none btn btn-outline-primary" href="{% url 'tasks' %} ">Go Back</a>
+<form class="" method="post">
+    <div style="margin: 20px;">
+        <p>
+            <label style="font-weight: bold;">Title:</label> <br>
+            {{form.title}}
+                
+            
+        <br>
+        </p>
+
+        <p>
+            <label style="font-weight: bold;">Description:</label><br>
+            {{form.description}}
+        <br>
+        </p>
+
+        <p>
+            <label style="font-weight: bold;">MeetLink:</label> <br>
+            {{form.meetlink}}
+        <br>
+        </p>
+        
+        <p>
+            <label style="font-weight: bold;">Complated:</label> <br>
+            {{form.complete}}
+        <br>
+        </p>
+        
+        
+        {% csrf_token %}
+    </div>
+    
+    <input class = "btn btn-primary"type="submit" value="Submit">
+</form>
+</div>
+{% endblock %}
+

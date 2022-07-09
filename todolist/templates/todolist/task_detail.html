@@ -1,0 +1,27 @@
+{% extends 'todolist/main.html' %}
+
+<!-- This is task detail view. -->
+
+{% block content%}
+
+
+<div class="shadow p-3 mb-5 bg-body rounded" style=" margin: 20px;">
+    <a class="text-decoration-none btn btn-outline-primary" href="{% url 'tasks' %}" style="margin-top: 40px;">Go Back</a>
+<h1 style="margin-top: 40px;">{{task.title}}</h1><br>
+<p>Task Created on: {{task.created_date}}</p><br>
+<p style="font-weight:bold;">{{task.description}}</p><br>
+{% if task.meetlink %}
+<p style="font-weight:bold;"><a href={{task.meetlink}} class="text-decoration-none btn btn-outline-info" style="color:black" target="_blank">Go to Meet</a></p><br>
+{% else %}
+<p></p>
+{% endif %}
+
+
+{% if task.complete %}
+<p style="color:blue;" >Done</p><br>
+{% else %}
+<p style="color:red;">Not Done</p><br>
+{% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+
+
+<!-- This Page contains ListView for Task Model. -->
+
+
+
+{% extends 'todolist/main.html'%}
+
+{% block content %}
+
+<!-- Code Below makes sure, user is logged in. -->
+{% if request.user.is_authenticated %}
+    <p>Welcome, {{request.user}}</p><br>
+    <a class="text-decoration-none btn btn-danger" href="{% url 'logout' %}">LogOut</a><br>
+{% else %}
+<a class="text-decoration-none btn btn-info" href="{% url 'login' %}">LogIn</a><br>
+{% endif %}
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <h1>My to do List</h1><br>
+
+<!-- Search box. -->
+<form method="get">
+
+    <input type="text" style="height:30px;" name="search-area" value="{{search_input}}" autocomplete="off">
+    <input class="btn btn-primary" style="height:40px ;margin-left:20px;" type="submit" name="Search">
+   
+</form><br>
+
+
+<!-- Link to form for adding task and count of tasks yet to be completed. -->
+<a class="text-decoration-none btn btn-dark" href="{% url 'task-create' %}">+ Add Task</a><br><br>
+<label>Taks Yet to be completed: {{count}}</label><br><br>
+
+
+
+<!-- Tasks table with coloumns, title, created_date, meetlink(if available), Edit tab and delete tab. -->
+<table class="table table-bright" style="font-weight:bold;">
+    <tr>
+        <th style="font-size:20px;">Tasks</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for task in tasks %}
+        <tr>
+            <td><a class="text-decoration-none" href="{% url 'task' task.id %}">{{task.title}}</a></td>
+            <td><a class="text-decoration-none" style="color:black;">{{task.created_date}}</a></td>
+            {% if task.meetlink %}
+            <td><a class="text-decoration-none btn btn-info" style="font-weight: bold ;color:black;" target="_blank" href={{task.meetlink}}>Meet</a></td>
+            {% else %}
+            <td><a class="text-decoration-none" style="color:white;" target="_blank">Meet</a></td>
+            {% endif %}
+            
+            <td><a class="text-decoration-none" href="{% url 'task-update' task.id %}" style="color:rgb(65, 168, 65);">Edit</a></td>
+            <td><a class="text-decoration-none w3-large fa fa-trash"  href="task-delete/{{task.id}}" style="color: red;"></a></td>
+            {% if task.complete %}
+                <td style="color:rgb(65, 168, 65);">Done</td>
+            {% else %}
+                <td style="color:red">Not Done</td>
+            {% endif %}
+            <!--
+                This line below used task-delete-conformation form which was removed as in todolist, it is prefered deleting task on one click
+                instead of need to confirm delete.
+                <td><a class="text-decoration-none w3-large fa fa-trash" href="{% url 'task-delete' task.id %}"></a></td>
+            -->
+        </tr>
+        <!-- In case if No Tasks. Code below executes. -->
+        {% empty %}
+            <h3>No tasks to show.</h3>
+    {% endfor %}
+</table>
+
+    </div>
+
+{% endblock content %}
